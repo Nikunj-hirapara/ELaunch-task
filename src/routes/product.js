@@ -10,6 +10,8 @@ const multer = require("multer");
 const router = express.Router();
 const shortid = require("shortid");
 const path = require("path");
+const { validateProduct } = require("../validators/product");
+const { isRequestValidate } = require("../validators/product");
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -26,6 +28,8 @@ router.post(
   "/product/create",
   auth,
   adminMiddleware,
+  validateProduct,
+  isRequestValidate,
   upload.array("productPicture"),
   categoryProduct
 );

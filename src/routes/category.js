@@ -13,6 +13,8 @@ const router = express.Router();
 const shortid = require("shortid");
 const path = require("path");
 const multer = require("multer");
+const { validateCategory } = require("../validators/category");
+const { isRequestValidate } = require("../validators/category");
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -28,6 +30,8 @@ const upload = multer({ storage });
 router.post(
   "/category/create",
   requireSignin,
+  validateCategory,
+  isRequestValidate,
   upload.single("categoryImage"),
   addCategory
 );
