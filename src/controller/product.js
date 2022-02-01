@@ -5,6 +5,11 @@ const slugify = require("slugify");
 exports.categoryProduct = (req, res) => {
   const { name, price, description, quantity, category, createdBy } = req.body;
 
+  const product = await Product.findOne({ name: name });
+  if(product) {
+    throw new Error("Product name already created")
+  }
+
   let productPicture = [];
 
   if (req.files.length > 0) {
